@@ -1,3 +1,7 @@
 version: "2"
 domain: clustar.ai
 repo: github.com/asdfsx/selfcrdv2
+resources:
+- group: core
+  version: v1
+  kind: SelfCRDV2
