@@ -16,6 +16,7 @@ limitations under the License.
 package v1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -24,17 +25,27 @@ import (
 
 // SelfCRDV2Spec defines the desired state of SelfCRDV2
 type SelfCRDV2Spec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +kubebuilder:validation:MinLength=0
+	Username string `json:"username,omitempty"`
+
+	// +kubebuilder:validation:MinLength=0
+	CustomID string `json:"custom_id,omitempty"`
 }
 
 // SelfCRDV2Status defines the observed state of SelfCRDV2
 type SelfCRDV2Status struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+
+	// A list of pointers to currently running jobs.
+	// +optional
+	Active []corev1.ObjectReference `json:"active,omitempty"`
+
+	// Information when was the last time the job was successfully scheduled.
+	// +optional
+	LastScheduleTime *metav1.Time `json:"lastScheduleTime,omitempty"`
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 
 // SelfCRDV2 is the Schema for the selfcrdv2s API
 type SelfCRDV2 struct {
